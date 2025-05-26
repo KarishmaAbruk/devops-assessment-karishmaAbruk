@@ -12,13 +12,6 @@ pipeline {
         AWS_SECRET_ACCESS_KEY = credentials('aws-secret-access-key')
     }
 
-    stages {
-        stage('Checkout Code') {
-            steps {
-                git 'https://github.com/KarishmaAbruk/devops-assessment-karishmaAbruk.git' 
-            }
-        }
-
         stage('Setup Terraform') {
             steps {
                 sh 'terraform --version'
