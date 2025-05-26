@@ -8,12 +8,14 @@ pipeline {
     environment {
         TF_VAR_aws_region         = 'us-east-1'
         TF_VAR_availability_zone = 'us-east-1a'
+        AWS_ACCESS_KEY_ID = credentials('aws-access-key-id')
+        AWS_SECRET_ACCESS_KEY = credentials('aws-secret-access-key')
     }
 
     stages {
         stage('Checkout Code') {
             steps {
-                git 'https://your-repo-url/terraform-aws-vpc-ec2.git' 
+                git 'https://github.com/KarishmaAbruk/devops-assessment-karishmaAbruk.git' 
             }
         }
 
