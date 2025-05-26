@@ -126,6 +126,32 @@ resource "aws_security_group" "web_sg" {
   }
 }
 
+# Security Group for Database - Private Access Only
+resource "aws_security_group" "db_sg" {
+  name        = "db-sg"
+  description = "Allow access to DB from private subnet only"
+  vpc_id      = aws_vpc.main.id
+
+  ingress {
+    description = "Allow MySQL/Aurora from private subnet"
+    from_port   = 3306
+    to_port     = 3306
+    protocol    = "tcp"
+    cidr_blocks = [aws_subnet.private_subnet.cidr_block]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "DBSecurityGroup"
+  }
+}
+
 # EC2 Instance
 resource "aws_instance" "web" {
   ami                    = var.ami_id
